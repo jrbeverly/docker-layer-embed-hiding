@@ -1,0 +1,18 @@
+services:
+  registry:
+    image: registry:2.8.3@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373
+    ports:
+      - "5000:5000"
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+    volumes:
+      - registry-data:/var/lib/registry
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://localhost:5000/v2/"]
+      interval: 1s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  registry-data:
+
